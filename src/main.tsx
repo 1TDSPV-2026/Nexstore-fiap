@@ -5,8 +5,4 @@ import { getProducts } from './services/products.ts'
 
 const root = createRoot(document.getElementById('root')!)
 
-getProducts().then((products) => {
-  root.render(
-    <App products={products} />
-  )
-})
+root.render(<App />)
