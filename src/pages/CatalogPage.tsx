@@ -1,22 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Product } from "../types/product";
 import { ProductList } from "../components/ProductList";
-import { getProducts } from "../services/products";
 import type { CartItem } from "../types/cartItem";
+import { useProducts } from "../hooks/useProducts";
 
 
 export function CatalogPage() {
-    const [products, setProducts] = useState<Product[]>([])
-    const [loading, setLoading] = useState(false)
     const [cartItem, setCartItem] = useState<CartItem[]>([])
 
-    useEffect(() => {
-        setLoading(true)
-        getProducts().then((data) => {
-            setProducts(data)
-        }).finally(() => setLoading(false))
-    }, [])
+    const [query, setQuery] = useState('')
 
+    const [category, setCategory] = useState('all')
+
+    const { products, loading } = useProducts()
+
+    const categories = ['all', ...new Set(products.map((product) => product.category))]
+
+    const filtered = products.filter((product) => {
+        return (category === 'all' || product.category === category) && product.title.toLowerCase().includes(query.toLocaleLowerCase())
+    })
 
     function handleAddCartItem(product: Product): void {
 
@@ -43,18 +45,38 @@ export function CatalogPage() {
     }
 
     return (
-        <>
-            <h2>Itens para comprar</h2>
-            <div>
-                {cartItem.map((item) => {
-                    return <p>{item.product.title} valor: {item.product.price}</p>
-                })}
-            </div>
-            {
+        <section>
+            <input
+                type="text"
+                placeholder="Buscar produto..."
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+            />
 
-                loading ? <p>Carregando Itens...</p>
-                    : <ProductList products={products} onAddToCart={handleAddCartItem} />
+            <select
+                name="category-list"
+                id="category"
+                value={category}
+                onChange={(event) => setCategory(event.target.value)}
+            >
+                {
+                    categories.map((item) => {
+                        return <option value={item}>{item}</option>
+                    })
+                }
+
+            </select>
+
+            {
+                loading ?
+                    <p>Carregando itens...</p> :
+
+                    <ProductList
+                        products={filtered}
+                        onAddToCart={handleAddCartItem}
+                    />
             }
-        </>
+
+        </section>
     )
 }
