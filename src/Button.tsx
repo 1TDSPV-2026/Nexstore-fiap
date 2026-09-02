@@ -1,11 +1,14 @@
-import "./button.css"
+interface ButtonProps {
+    text: string
+}
 
-
-export function Button() {
-
+export function Button(props:ButtonProps) {
 
     return (
-        <button>clique</button>
+        <>
+            <h2>Esse botão pode ser alterado</h2>
+            <button>{props.text}</button>
+        </>
     )
 
 }
