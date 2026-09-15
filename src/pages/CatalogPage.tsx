@@ -3,6 +3,7 @@ import type { Product } from "../types/product";
 import { ProductList } from "../components/ProductList";
 import type { CartItem } from "../types/cartItem";
 import { useProducts } from "../hooks/useProducts";
+import { Link } from "react-router-dom";
 
 
 export function CatalogPage() {
@@ -57,6 +58,8 @@ export function CatalogPage() {
 
     return (
         <section>
+            <Link to="/cart" >Item disponiveis</Link>
+
             <input
                 type="text"
                 placeholder="Buscar produto..."
@@ -78,18 +81,18 @@ export function CatalogPage() {
 
             </select>
 
-            <input 
-            type="number"
-            placeholder="Valor minimo"
-            value={minValue}
-            onChange={(event) => setMinValue(event.target.valueAsNumber ? event.target.valueAsNumber : 0)}
+            <input
+                type="number"
+                placeholder="Valor minimo"
+                value={minValue}
+                onChange={(event) => setMinValue(event.target.valueAsNumber ? event.target.valueAsNumber : 0)}
             />
 
-            <input 
-            type="number" 
-            placeholder="Valor máximo"
-            value={maxValue}
-            onChange={(event) => setMaxValue(event.target.valueAsNumber ? event.target.valueAsNumber : 0)}
+            <input
+                type="number"
+                placeholder="Valor máximo"
+                value={maxValue}
+                onChange={(event) => setMaxValue(event.target.valueAsNumber ? event.target.valueAsNumber : 0)}
             />
 
             {
@@ -101,6 +104,7 @@ export function CatalogPage() {
                         onAddToCart={handleAddCartItem}
                     />
             }
+
         </section>
     )
 }
