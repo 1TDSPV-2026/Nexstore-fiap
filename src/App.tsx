@@ -1,11 +1,19 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { CatalogPage } from "./pages/CatalogPage"
+import { CartItem } from "./pages/CartItem"
+import { MainLayout } from "./layouts/MainLayout"
 
 function App() {
   return (
-    <main>
-      <h1>NexStore</h1>
-      <CatalogPage/>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route index element={<CatalogPage />} />
+          <Route path="/cart" element={<CartItem />} />
+        </Route>
+
+      </Routes>
+    </BrowserRouter>
   )
 }
 
