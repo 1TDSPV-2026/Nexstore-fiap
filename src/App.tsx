@@ -3,6 +3,8 @@ import { CatalogPage } from "./pages/CatalogPage"
 import { CartItem } from "./pages/CartItem"
 import { MainLayout } from "./layouts/MainLayout"
 
+import "./index.css"
+
 function App() {
   return (
     <BrowserRouter>
@@ -11,7 +13,6 @@ function App() {
           <Route index element={<CatalogPage />} />
           <Route path="/cart" element={<CartItem />} />
         </Route>
-
       </Routes>
     </BrowserRouter>
   )
