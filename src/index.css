@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+
+@theme {
+
+    --font-display: "Space Grotesk", sans-serif;
+
+    --font-sans: "Inter", sans-serif;
+
+    --font-mono: "IBM Plex Mono", monospace
+}
+
+@layer base {
+
+    body {
+        @apply bg-stone-50 text-neutral-900 font-sans antialiased
+    }
+
+    button:not(:disabled) {
+        @apply cursor-pointer
+    }
+
+}
+
+@layer components {
+
+    .card {
+        @apply rounded-xl border border-stone-200 bg-white
+    }
+
+    .btn-primary {
+        @apply items-center justify-center gap-1.5 rounded-full bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700 focus-visible:outline-none disabled:opacity-60
+    }
+
+    .field {
+        @apply rounded-full border border-stone-300 bg-white px-3 py-1.5 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500
+    }
+
+}
