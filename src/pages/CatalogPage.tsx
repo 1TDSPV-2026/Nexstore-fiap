@@ -1,15 +1,14 @@
 import { useState } from "react";
 import type { Product } from "../types/product";
 import { ProductList } from "../components/ProductList";
-import type { CartItem } from "../types/cartItem";
 import { useProducts } from "../hooks/useProducts";
-import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
 
+interface CatalogPageProps {
+    onAddCartItem: (product: Product) => void
+}
 
-export function CatalogPage() {
-    const [cartItem, setCartItem] = useState<CartItem[]>([])
-
+export function CatalogPage({ onAddCartItem }: CatalogPageProps) {
     const [query, setQuery] = useState('')
 
     const [category, setCategory] = useState('all')
@@ -33,30 +32,6 @@ export function CatalogPage() {
         return searchCategory && searchWords && max && min
     })
 
-    function handleAddCartItem(product: Product): void {
-
-        const list = [...cartItem]
-
-        const exists = list.find((value) => value.product.id === product.id)
-
-        if (exists) {
-            const item: CartItem = {
-                product: exists.product,
-                quantity: exists.quantity + 1
-            }
-            list.push(item)
-            setCartItem(list)
-            return
-        }
-
-        const item: CartItem = {
-            product: product,
-            quantity: 1
-        }
-        list.push(item)
-        setCartItem(list)
-    }
-
     return (
         <section className="mb-5 flex flex-wrap items-end justify-between gap-3">
 
@@ -71,7 +46,7 @@ export function CatalogPage() {
             <div className="flex flex-wrap items-center gap-2">
 
                 <div className="relative">
-                    <Search size={15} className="absolute left-2.5 top-2.5 text-neutral-400"/>
+                    <Search size={15} className="absolute left-2.5 top-2.5 text-neutral-400" />
                     <input
                         type="text"
                         placeholder={"Buscar produto..."}
@@ -119,7 +94,7 @@ export function CatalogPage() {
 
                     <ProductList
                         products={filtered}
-                        onAddToCart={handleAddCartItem}
+                        onAddToCart={onAddCartItem}
                     />
             }
 
