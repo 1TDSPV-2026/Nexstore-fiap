@@ -1,4 +1,5 @@
 import type { Product } from "../types/product"
+import { formatPrice } from "../utils/formatPrice"
 
 interface ProductCardProps {
     product: Product
@@ -17,7 +18,7 @@ export function ProductCard({ product, onAddCart }: ProductCardProps) {
             <h3 className="text-sm font-medium leading-snug">{product.title}</h3>
 
             <div className="flex flex-wrap items-center justify-between gap-2 pt-3">
-                <span className="font-mono text-sm font-semibold">{product.price}</span>
+                <span className="font-mono text-sm font-semibold">{formatPrice(product.price)}</span>
 
                 <button className="btn-primary px-3 py-1 text-xs" onClick={() => onAddCart(product)}>Adicionar ao carrinho</button>
             </div>
