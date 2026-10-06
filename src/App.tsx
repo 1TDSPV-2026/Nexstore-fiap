@@ -7,6 +7,7 @@ import "./index.css"
 import type { CartItem } from "./types/cartItem"
 import { useState } from "react"
 import type { Product } from "./types/product"
+import { ProductPage } from "./pages/ProductPage"
 
 function App() {
   const [cartItem, setCartItem] = useState<CartItem[]>([])
@@ -16,8 +17,8 @@ function App() {
     const exists = list.find((value) => value.product.id === product.id)
     if (exists) {
       const newList = list.map((item) => {
-        if(item.product.id === product.id) {
-          return {...item, quantity: item.quantity + 1}
+        if (item.product.id === product.id) {
+          return { ...item, quantity: item.quantity + 1 }
         } else {
           return item
         }
@@ -39,8 +40,8 @@ function App() {
     const list = [...cartItem]
 
     const newList = list.map((item) => {
-      if(item.product.id === productId) {
-        return {...item, quantity: item.quantity + delta}
+      if (item.product.id === productId) {
+        return { ...item, quantity: item.quantity + delta }
       } else {
         return item
       }
@@ -61,11 +62,12 @@ function App() {
         <Route element={<MainLayout totalItems={cartItem.length} />}>
           <Route index element={<CatalogPage onAddCartItem={handleAddCartItem} />} />
           <Route path="/carrinho" element={
-          <CartPage 
-          onRemove={handleRemoveItem} 
-          onUpdateQuantity={handleUpdateQuantity} 
-          cartItem={cartItem} />
+            <CartPage
+              onRemove={handleRemoveItem}
+              onUpdateQuantity={handleUpdateQuantity}
+              cartItem={cartItem} />
           } />
+          <Route path="/product/:id" element={<ProductPage onAddCart={handleAddCartItem} />} />
         </Route>
       </Routes>
     </BrowserRouter>
