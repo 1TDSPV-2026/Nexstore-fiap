@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import type { Product } from "../types/product"
 import { getProductById } from "../services/products"
 import { formatPrice } from "../utils/formatPrice"
@@ -15,6 +15,8 @@ export function ProductPage({ onAddCart }: ProductPageProps) {
     const [loading, setLoading] = useState(true)
     const { id } = useParams()
 
+    const navigate = useNavigate()
+
     useEffect(() => {
 
         if (!id) return
@@ -27,7 +29,10 @@ export function ProductPage({ onAddCart }: ProductPageProps) {
 
     }, [])
 
-    console.log('product', product)
+    function handleBuyNow(product:Product) {
+        onAddCart(product)
+        navigate("/carrinho")
+    }
 
     if (loading) {
         return <p className="py-20 text-center text-sm text-neutral-500">Carregando produto...</p>
@@ -62,7 +67,7 @@ export function ProductPage({ onAddCart }: ProductPageProps) {
 
                     <div className="flex flex-wrap gap-2">
                         <button className="btn-primary" onClick={() => onAddCart(product)}>Adicionar ao carrinho</button>
-                        <button className="btn-primary bg-neutral-900 hover:bg-neutral-800">Comprar Agora</button>
+                        <button className="btn-primary bg-neutral-900 hover:bg-neutral-800" onClick={() => handleBuyNow(product)}>Comprar Agora</button>
                     </div>
                 </div>
             </div>
