@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom"
 import type { Product } from "../types/product"
+import { formatPrice } from "../utils/formatPrice"
 
 interface ProductCardProps {
     product: Product
@@ -9,20 +11,20 @@ export function ProductCard({ product, onAddCart }: ProductCardProps) {
 
     return (
         <section className="card flex flex-col p-3 transition group hover:border-indigo-300 hover:shadow-md">
+            <Link to={`/product/${product.id}`} className="flex-1">
+                <div className="mb-3 flex h-32 items-center justify-center overflow-hidden rounded-lg bg-stone-50">
+                    <img className="h-full object-contain transition group-hover:scale-105" src={product.image} alt={product.title} />
+                </div>
 
-            <div className="mb-3 flex h-32 items-center justify-center overflow-hidden rounded-lg bg-stone-50">
-                <img className="h-full object-contain transition group-hover:scale-105" src={product.image} alt={product.title} />
-            </div>
+                <h3 className="text-sm font-medium leading-snug">{product.title}</h3>
 
-            <h3 className="text-sm font-medium leading-snug">{product.title}</h3>
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-3">
+                    <span className="font-mono text-sm font-semibold">{formatPrice(product.price)}</span>
 
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-3">
-                <span className="font-mono text-sm font-semibold">{product.price}</span>
+                    <button className="btn-primary px-3 py-1 text-xs" onClick={() => onAddCart(product)}>Adicionar ao carrinho</button>
+                </div>
 
-                <button className="btn-primary px-3 py-1 text-xs" onClick={() => onAddCart(product)}>Adicionar ao carrinho</button>
-            </div>
-
-
+            </Link>
         </section>
     )
 }
