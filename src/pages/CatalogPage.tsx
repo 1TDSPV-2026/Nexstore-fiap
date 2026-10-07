@@ -36,7 +36,7 @@ export function CatalogPage({ onAddCartItem }: CatalogPageProps) {
         <section className="mb-5 flex flex-wrap items-end justify-between gap-3">
 
             <div>
-                <h1 className="font-display text-2xl font-bold">Catálogoooooooooooooooo (Homologação)</h1>
+                <h1 className="font-display text-2xl font-bold">Catálogo</h1>
 
                 <p className="text-sm text-neutral-500">
                     {loading ? "Carregando produtos..." : `${filtered.length} produtos disponiveis`}
