@@ -3,6 +3,7 @@ import type { Product } from "../types/product";
 import { ProductList } from "../components/ProductList";
 import { useProducts } from "../hooks/useProducts";
 import { Search } from "lucide-react";
+import { ProductGridSkeleton } from "../components/ProductGridSkeleton";
 
 interface CatalogPageProps {
     onAddCartItem: (product: Product) => void
@@ -90,7 +91,7 @@ export function CatalogPage({ onAddCartItem }: CatalogPageProps) {
 
             {
                 loading ?
-                    <p>Carregando itens...</p> :
+                    <ProductGridSkeleton /> :
 
                     <ProductList
                         products={filtered}
