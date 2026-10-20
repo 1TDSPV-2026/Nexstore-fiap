@@ -1,13 +1,18 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { CatalogPage } from "./pages/CatalogPage"
 import { CartPage } from "./pages/CartPage"
 import { MainLayout } from "./layouts/MainLayout"
 
 import "./index.css"
 import type { CartItem } from "./types/cartItem"
-import { useState } from "react"
+import { useState, lazy } from "react"
 import type { Product } from "./types/product"
-import { ProductPage } from "./pages/ProductPage"
+import { NotFoundPage } from "./pages/NotFoundPage"
+
+
+const ProductPage = lazy(() => import('./pages/ProductPage').then((module) => ({ default: module.ProductPage })))
+
+const CatalogPage = lazy(() => import('./pages/CatalogPage').then((module) => ({ default: module.CatalogPage })))
+
 
 function App() {
   const [cartItem, setCartItem] = useState<CartItem[]>([])
@@ -68,6 +73,9 @@ function App() {
               cartItem={cartItem} />
           } />
           <Route path="/product/:id" element={<ProductPage onAddCart={handleAddCartItem} />} />
+
+          {/* Catch-all */}
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
