@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { Product } from "../types/product";
 import { ProductList } from "../components/ProductList";
 import { useProducts } from "../hooks/useProducts";
@@ -20,18 +20,15 @@ export function CatalogPage({ onAddCartItem }: CatalogPageProps) {
 
     const { products, loading, categories } = useProducts()
 
-    const filtered = products.filter((product) => {
+    const filtered = useMemo(() => products.filter((product) => {
         const searchCategory = category === 'all' || product.category === category
         const searchWords = product.title.toLowerCase().includes(query.toLocaleLowerCase())
 
         const max = maxValue === 0 || product.price <= maxValue;
         const min = minValue === 0 || product.price >= minValue;
 
-        console.log(max)
-
-
         return searchCategory && searchWords && max && min
-    })
+    }), [products, category, query])
 
     return (
         <section className="mb-5 flex flex-wrap items-end justify-between gap-3">
