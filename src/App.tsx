@@ -4,7 +4,7 @@ import { MainLayout } from "./layouts/MainLayout"
 
 import "./index.css"
 import type { CartItem } from "./types/cartItem"
-import { useState, lazy } from "react"
+import { useState, lazy, useCallback } from "react"
 import type { Product } from "./types/product"
 import { NotFoundPage } from "./pages/NotFoundPage"
 
@@ -17,7 +17,7 @@ const CatalogPage = lazy(() => import('./pages/CatalogPage').then((module) => ({
 function App() {
   const [cartItem, setCartItem] = useState<CartItem[]>([])
 
-  function handleAddCartItem(product: Product): void {
+  const handleAddCartItem = useCallback((product: Product) => {
     const list = [...cartItem]
     const exists = list.find((value) => value.product.id === product.id)
     if (exists) {
@@ -38,9 +38,9 @@ function App() {
     }
     list.push(item)
     setCartItem(list)
-  }
+  },[])
 
-  function handleUpdateQuantity(productId: number, delta: number) {
+  const handleUpdateQuantity = useCallback((productId: number, delta: number) => {
 
     const list = [...cartItem]
 
@@ -53,13 +53,13 @@ function App() {
     }).filter((item) => item.quantity > 0)
 
     setCartItem(newList)
-  }
+  }, [cartItem])
 
-  function handleRemoveItem(productId: number) {
+  const handleRemoveItem = useCallback((productId: number) => {
     const list = [...cartItem]
     const newList = list.filter((item) => item.product.id !== productId)
     setCartItem(newList)
-  }
+  }, [])
 
   return (
     <BrowserRouter>

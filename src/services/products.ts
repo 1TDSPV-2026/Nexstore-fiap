@@ -4,7 +4,7 @@ const API = 'https://fakestoreapi.com'
 // const API = "http://localhost:3000"
 
 export function getProducts(): Promise<Product[]> {
-    const response = fetch(`${API}/products`)
+    const response = fetch(`${API}/products/`)
         .then((data) => {
             return data.json()
         })
